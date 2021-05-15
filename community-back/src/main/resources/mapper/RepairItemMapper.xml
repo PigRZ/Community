@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.RepairItemMapper">
+    <select id="getAllRepairItem" resultType="repairitem">
+        select * from repairitem;
+    </select>
+    <select id="getRepairItemByType" resultType="repairitem">
+        select * from repairitem where type=#{type};
+    </select>
+
+    <select id="getRepairItemByName" resultType="repairitem">
+        select * from repairitem where name like CONCAT('%',#{name},'%');
+    </select>
+
+    <select id="getTypeList" resultType="java.lang.String">
+        select distinct type from repairitem;
+    </select>
+
+    <select id="getRepairItemByUniqueName" resultType="repairitem">
+        select * from repairitem where name = #{name};
+    </select>
+
+    <insert id="addRepairItem" parameterType="repairitem">
+        insert into repairitem values (#{id},#{name},#{type});
+    </insert>
+
+    <update id="updateRepairItem" parameterType="repairitem">
+        update repairitem set name=#{name},type=#{type} where id=#{id}
+    </update>
+
+    <delete id="deleteRepairItem" parameterType="java.lang.Integer">
+        delete from repairitem where id=#{id};
+    </delete>
+</mapper>

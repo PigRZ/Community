@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.UserMapper">
+    <select id="getAllUser" resultType="user">
+        select * from user;
+    </select>
+
+    <select id="getUserById" resultType="user">
+        select * from user where id=#{id};
+    </select>
+
+    <select id="getUserByNameOrTelephone" resultType="user" parameterType="java.lang.String">
+        select * from user where name like CONCAT('%',#{nameOrTelephone},'%') or telephone like CONCAT('%',#{nameOrTelephone},'%');
+    </select>
+
+    <select id="getUserBySectionAndHealth" resultType="user" >
+        select * from user where section=#{section} and health=#{health};
+    </select>
+    <select id="getUserBySection" resultType="user" >
+        select * from user where section=#{section};
+    </select>
+    <select id="getUserByHealth" resultType="user" >
+        select * from user where health=#{health};
+    </select>
+
+    <select id="getUserByTelephone" resultType="user" >
+        select * from user where telephone=#{telephone};
+    </select>
+
+    <insert id="addUser" parameterType="user">
+        insert into user(id,name,sex,identity,telephone,section,cell,password,health) values (#{id},#{name},#{sex},#{identity},#{telephone},#{section},#{cell},#{password},#{health});
+    </insert>
+
+    <update id="updateUser" parameterType="user">
+        update user set name=#{name},sex=#{sex},identity=#{identity},telephone=#{telephone},section=#{section},cell=#{cell},health=#{health} where id=#{id}
+    </update>
+
+
+    <update id="updateUserHealth">
+        update user set health=#{health} where id=#{id};
+    </update>
+
+    <update id="changePwd" >
+        update user set password=#{newPwd}where id=#{id} and password=#{oldPwd};
+    </update>
+
+    <update id="updatePhoto">
+        update user set photo=#{photo} where id=#{id};
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id=#{id};
+    </delete>
+</mapper>

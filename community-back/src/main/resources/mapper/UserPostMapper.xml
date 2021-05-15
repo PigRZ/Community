@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.UserPostMapper">
+    <select id="getAllUserPost" resultType="userpost">
+        select userpost.id as id,userid,user.name as username,user.photo as userphoto,title,content,time,userpost.image as image
+        from userpost inner join user
+        on user.id=userpost.userid
+        order by time desc;
+    </select>
+
+    <select id="getAllUserPostByUserid" resultType="userpost">
+        select userpost.id as id,userid,user.name as username,user.photo as userphoto,title,content,time,userpost.image as image
+        from userpost inner join user
+        on user.id=userpost.userid
+        where user.id=#{userid}
+        order by time desc;
+    </select>
+
+    <select id="getUserPostById" resultType="userpost">
+        select userpost.id as id,userid,user.name as username,user.photo as userphoto,title,content,time,userpost.image as image
+        from userpost inner join user
+        on user.id=userpost.userid
+        where userpost.id=#{id};
+    </select>
+
+    <insert id="addUserPost" parameterType="userpost">
+        insert into userpost(id,userid,title,content,time,image) values (#{id},#{userid},#{title},#{content},#{time},#{image});
+    </insert>
+
+    <update id="updateUserPost" parameterType="userpost">
+        update userpost set title=#{title},content=#{content},time=#{time} where id=#{id} and userid=#{userid};
+    </update>
+
+    <delete id="deleteUserPost" parameterType="java.lang.Integer">
+        delete from userpost where id=#{id};
+    </delete>
+</mapper>

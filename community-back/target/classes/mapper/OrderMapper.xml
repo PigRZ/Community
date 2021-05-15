@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.OrderMapper">
+    <select id="getAllOrder" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        order by date desc;
+    </select>
+
+
+    <select id="getNoDoneOrder" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        where done='否'
+        order by date desc;
+    </select>
+
+    <select id="getOrderByDate" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        where date=#{date};
+    </select>
+    <select id="getOrderByUserid" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        where user.id = #{userid}
+        order by date desc;
+    </select>
+    <select id="getOrderByUsername" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        where user.name like CONCAT('%',#{username},'%')
+        order by date desc;
+    </select>
+
+    <select id="getOrderByGoodname" resultType="order">
+        select `order`.id as id,userid,goodid,CONCAT('/image/good/',imagepath) as imagepath,user.name as username,CONCAT(user.section,'号楼',user.cell,'室') as useraddress,good.name as goodname ,`count`,date,done
+        from good inner join `order` inner join user
+        on good.id=goodid and user.id=userid
+        where good.name like CONCAT('%',#{goodname},'%')
+        order by date desc;
+    </select>
+
+    <insert id="addOrder" parameterType="order">
+        insert into `order`(userid,goodid,date,done,count) values (#{userid},#{goodid},#{date},#{done},#{count});
+    </insert>
+
+    <update id="updateOrder" parameterType="order">
+        update `order` set count=#{count},date=#{date} where id=#{id};
+    </update>
+
+
+    <update id="completeOrder" parameterType="java.lang.Integer">
+        update `order` set done='是' where id=#{id};
+    </update>
+
+    <delete id="deleteOrder" parameterType="java.lang.Integer">
+        delete from `order` where id=#{id};
+    </delete>
+</mapper>

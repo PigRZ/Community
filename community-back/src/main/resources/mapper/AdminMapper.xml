@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.AdminMapper">
+    <select id="getAllAdmin" resultType="admin">
+        select * from admin;
+    </select>
+    <select id="getAdminById" resultType="admin">
+        select * from admin where id=#{id};
+    </select>
+    <select id="getAdminByAccount" resultType="admin">
+        select * from admin where account=#{account};
+    </select>
+    <update id="changePwd" >
+        update admin set password=#{newPwd} where id=#{id} and password=#{oldPwd};
+    </update>
+</mapper>

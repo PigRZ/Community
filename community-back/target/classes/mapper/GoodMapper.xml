@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.GoodMapper">
+    <select id="getAllGood" resultType="good">
+        select id,name,type,price,CONCAT('/image/good/',imagepath) as imagepath from good;
+    </select>
+    <select id="getGoodByType" resultType="good">
+        select id,name,type,price,CONCAT('/image/good/',imagepath) as imagepath  from good where type=#{type};
+    </select>
+
+    <select id="getGoodByName" resultType="good">
+        select id,name,type,price,CONCAT('/image/good/',imagepath) as imagepath  from good where name like CONCAT('%',#{name},'%');
+    </select>
+
+    <select id="getGoodByUniqueName" resultType="good">
+        select id,name,type,price,CONCAT('/image/good/',imagepath) as imagepath  from good where name = #{name};
+    </select>
+
+
+    <select id="getGoodById" resultType="good">
+        select id,name,type,price,CONCAT('/image/good/',imagepath) as imagepath  from good where id = #{id};
+    </select>
+
+    <select id="getTypeList" resultType="java.util.HashMap">
+        select distinct type from good;
+    </select>
+
+    <select id="getGoodImagePath" resultType="java.lang.String">
+        select CONCAT('/image/good/',imagepath) as imagepath from good where id=#{id};
+    </select>
+
+
+    <insert id="addGood" parameterType="good">
+        insert into good(id,name,type,price,imagepath) values (#{id},#{name},#{type},#{price},#{imagepath});
+    </insert>
+
+    <update id="updateGood" parameterType="good">
+        update good set name=#{name},type=#{type},price=#{price},imagepath=#{imagepath} where id=#{id}
+    </update>
+
+    <delete id="deleteGood" parameterType="java.lang.Integer">
+        delete from good where id=#{id};
+    </delete>
+</mapper>

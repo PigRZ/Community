@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.CommentMapper">
+    <select id="getCommentByUserpostid" parameterType="java.lang.Integer" resultType="comment">
+        select * from comment where userpostid=#{userpostid};
+    </select>
+    <insert id="addComment" parameterType="comment">
+        insert into comment(userid,userpostid,content,image,time) values(#{userid},#{userpostid},#{content},#{image},#{time});
+    </insert>
+    <delete id="deleteCommentByUserpostid" parameterType="java.lang.Integer">
+        delete from comment where userpostid=#{userpostid};
+    </delete>
+</mapper>

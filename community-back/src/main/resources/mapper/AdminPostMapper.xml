@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.AdminPostMapper">
+    <select id="getAllAdminPostByAdminid" resultType="adminpost">
+        select adminpost.id as id,adminid,admin.name as adminname,title,content,time
+        from adminpost inner join admin
+        on admin.id=adminpost.adminid
+        where admin.id=#{adminid}
+        order by time;
+    </select>
+
+    <select id="getAdminPostList" resultType="adminpost">
+        select adminpost.id as id,adminid,admin.name as adminname,title,content,time
+        from adminpost inner join admin
+        on admin.id=adminpost.adminid
+        order by time;
+    </select>
+
+    <select id="getAdminPostById" resultType="adminpost">
+        select adminpost.id as id,adminid,admin.name as adminname,title,content,time
+        from adminpost inner join admin
+        on admin.id=adminpost.adminid
+        where adminpost.id=#{id};
+    </select>
+
+    <insert id="addAdminPost" parameterType="adminpost">
+        insert into adminpost values (#{id},#{adminid},#{title},#{content},#{time});
+    </insert>
+
+    <update id="updateAdminPost" parameterType="adminpost">
+        update adminpost set title=#{title},content=#{content},time=#{time} where id=#{id} and adminid=#{adminid};
+    </update>
+
+    <delete id="deleteAdminPost" parameterType="java.lang.Integer">
+        delete from adminpost where id=#{id};
+    </delete>
+</mapper>

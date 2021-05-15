@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pigrz.dao.PartyMemberMapper">
+    <select id="getAllPartyMember" resultType="partymember">
+        select * from partymember;
+    </select>
+
+    <select id="getPartyMemberByName" resultType="partymember">
+        select * from partymember where name like CONCAT('%',#{name},'%');
+    </select>
+    <select id="getWorkPartyMember" resultType="partymember">
+        select * from partymember where work='是';
+    </select>
+
+
+    <select id="getPartyMemberByTelephone" resultType="partymember">
+        select * from partymember where telephone =#{telephone};
+    </select>
+
+
+    <insert id="addPartyMember" parameterType="partymember">
+        insert into partymember values (#{id},#{name},#{telephone},#{work});
+    </insert>
+
+    <update id="updatePartyMember" parameterType="partymember">
+        update partymember set name=#{name},telephone=#{telephone} where id=#{id}
+    </update>
+
+    <update id="setPartyMemberWork" parameterType="java.lang.Integer">
+        update partymember set work='是' where id=#{id};
+    </update>
+
+    <update id="setPartyMemberNoWork" parameterType="java.lang.Integer">
+        update partymember set work='否' where id=#{id};
+    </update>
+
+    <delete id="deletePartyMember" parameterType="java.lang.Integer">
+        delete from partymember where id=#{id};
+    </delete>
+</mapper>
